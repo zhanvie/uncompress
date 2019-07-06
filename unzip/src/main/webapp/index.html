@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<div style="text-align:center;margin-top:5%">
+		<input type="file" multiple>
+		<button id="upload">上传</button>
+		<div style="margin:auto;margin-top:20px;border:1px solid red;width:300px;height:50px">
+			<span id="rmsg" style="height:50px;line-height:50px;">结果显示区</span>
+		</div>
+	</div>
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+<script>
+	$(function(){
+		$("button#upload").click(function(){
+			$("#rmsg").html("结果显示区");
+			var files = $("input[type='file']")[0].files;
+			var formData = new FormData();
+			$.each(files,function(i,it){
+				formData.append("files",it);
+			})
+			$.ajax({
+				url:"uploadfiles",
+				type:"post",
+				contentType: false,
+				processData: false,
+				data:formData,
+				success:function(data){
+					$("#rmsg").html("文件已上传");
+				},
+				error:function(){
+					$("#rmsg").html("上传出错");
+				}
+				
+			})
+		})
+	})
+</script>
+</body>
+</html>
